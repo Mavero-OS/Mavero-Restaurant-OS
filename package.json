@@ -1,0 +1,21 @@
+{
+  "name": "thali-restaurant-os",
+  "private": true,
+  "version": "1.0.0",
+  "description": "QR table ordering, kitchen display, payments and back office for restaurants in Bangladesh",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.4",
+    "preact": "^10.24.3",
+    "qrcode-generator": "^1.4.4"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.9.1",
+    "vite": "^5.4.10"
+  }
+}

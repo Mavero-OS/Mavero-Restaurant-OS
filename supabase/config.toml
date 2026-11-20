@@ -1,0 +1,20 @@
+project_id = "thali"
+
+# Supabase CLI settings for this project.
+# Payment gateways call pay-return and pay-ipn directly (no user login), so they must accept requests without a JWT.
+# They verify every payment with the gateway's own API before marking anything paid.
+
+[functions.pay-return]
+verify_jwt = false
+
+[functions.pay-ipn]
+verify_jwt = false
+
+[functions.pay-init]
+verify_jwt = true
+
+[functions.team]
+verify_jwt = true
+
+[functions.credentials]
+verify_jwt = true
