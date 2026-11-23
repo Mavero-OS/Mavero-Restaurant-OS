@@ -1,0 +1,28 @@
+name: Deploy Supabase
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      PROJECT_REF: ${{ vars.SUPABASE_PROJECT_REF }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: Link project
+        run: supabase link --project-ref "$PROJECT_REF" --password "$SUPABASE_DB_PASSWORD"
+      - name: Apply database schema
+        run: supabase db push --password "$SUPABASE_DB_PASSWORD"
+      - name: Deploy server functions
+        run: supabase functions deploy --project-ref "$PROJECT_REF"
+      - name: Set function settings
+        run: supabase secrets set --project-ref "$PROJECT_REF" APP_URL="${{ vars.PUBLIC_URL }}"
+      - name: Set receipt email
+        if: ${{ vars.RECEIPT_EMAIL != '' }}
+        run: supabase secrets set --project-ref "$PROJECT_REF" RECEIPT_EMAIL="${{ vars.RECEIPT_EMAIL }}"
